@@ -17,3 +17,5 @@ rootProject.name = "Cats"
 include(":app")
 include(":core")
 include(":data:cat")
+
+include(":features:home")
