@@ -48,6 +48,8 @@ android {
 }
 
 dependencies {
+    implementation(project(Modules.core))
+
     implementation(Compose.compiler)
     implementation(Compose.ui)
     implementation(Compose.uiToolingPreview)
