@@ -1,0 +1,82 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.google.devtools.ksp'
+
+android {
+    namespace "net.hanan.data"
+    compileSdk ProjectConfig.compileSdk
+
+    packaging {
+        exclude("META-INF/LICENSE-notice.md")
+        exclude("META-INF/LICENSE.md")
+    }
+
+    defaultConfig {
+        minSdk ProjectConfig.minSdk
+        targetSdk ProjectConfig.targetSdk
+        versionCode ProjectConfig.versionCode
+        versionName ProjectConfig.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        ksp {
+            arg('room.schemaLocation', "$projectDir/schemas")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+}
+
+dependencies {
+    implementation DaggerHilt.hiltAndroid
+    implementation Retrofit.okHttp
+    implementation Retrofit.retrofit
+    implementation Retrofit.okHttpLoggingInterceptor
+    implementation Retrofit.moshiConverter
+    implementation Retrofit.moshi
+    implementation Room.roomKtx
+    implementation Room.roomRuntime
+    implementation AndroidX.viewmodel
+
+    testImplementation Testing.junit4
+    testImplementation Testing.junitAndroidExt
+    testImplementation Testing.truth
+    testImplementation Testing.coroutines
+    testImplementation Testing.turbine
+    testImplementation Testing.mockk
+    testImplementation Testing.mockWebServer
+
+    androidTestImplementation Testing.junit4
+    androidTestImplementation Testing.junitAndroidExt
+    androidTestImplementation Testing.truth
+    androidTestImplementation Testing.coroutines
+    androidTestImplementation Testing.turbine
+    androidTestImplementation Testing.mockkAndroid
+    androidTestImplementation Testing.mockWebServer
+    androidTestImplementation Testing.testRunner
+    androidTestImplementation Testing.hiltTesting
+
+    kapt DaggerHilt.hiltCompiler
+    ksp Room.roomCompiler
+    ksp Retrofit.moshiCodegen
+
+    coreLibraryDesugaring Plugins.desugaring
+}
