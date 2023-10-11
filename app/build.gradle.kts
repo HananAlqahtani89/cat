@@ -49,6 +49,7 @@ android {
 
 dependencies {
     implementation(project(Modules.core))
+    implementation(project(Modules.home))
 
     implementation(Compose.compiler)
     implementation(Compose.ui)
