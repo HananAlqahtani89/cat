@@ -21,51 +21,26 @@ val Inter = FontFamily(
 )
 
 data class CatTypography(
-    val Title : TextStyle,
-    val Subhead : TextStyle,
+    val Title: TextStyle,
     val Callout: TextStyle,
-    val Footnote: TextStyle,
-    val Caption1: TextStyle,
-    val Caption2: TextStyle,
     val headline: TextStyle
 )
 
 val textStyle = CatTypography(
-    Title = TextStyle (
+    Title = TextStyle(
         fontFamily = Inter,
         fontStyle = FontStyle.Normal,
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp
     ),
-    Subhead = TextStyle(
-        fontFamily = Inter,
-        fontStyle = FontStyle.Normal,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp
-    ),
     Callout = TextStyle(
         fontFamily = Inter,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 13.sp
-    ),
-    Footnote = TextStyle(
-        fontFamily = Inter,
         fontWeight = FontWeight.Medium,
-        fontSize = 13.sp
-    ),
-    Caption1 = TextStyle(
-        fontFamily = Inter,
-        fontWeight = FontWeight.Medium,
-        fontSize = 12.sp
-    ),
-    Caption2 = TextStyle(
-        fontFamily = Inter,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 15.sp
     ),
     headline = TextStyle(
         fontFamily = Inter,
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp
-    ),
+    )
 )
