@@ -10,6 +10,8 @@ fun CatDto.toCatEntity(
 ): CatInfoEntity = CatInfoEntity(
     catId = id ?: throw MappingException("id cannot be null"),
     url = url ?: throw MappingException("url cannot be null"),
+    width = width ?: throw MappingException("width cannot be null"),
+    height = height ?: throw MappingException("height cannot be null")
 )
 
 fun CatInfoEntity.toCatInfo(

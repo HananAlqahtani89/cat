@@ -29,7 +29,7 @@ class CatRepositoryImpl(
                 it.isEmpty()
             },
             fetch = {
-                api.getCats(limit = 10, key = CatsApi.API_KEY, breedIds = "beng,abys")
+                api.getCats(limit = 300, key = CatsApi.API_KEY, breedIds = "beng,abys")
             },
             saveFetchResult = { catsDto ->
                 db.withTransaction {
@@ -42,10 +42,12 @@ class CatRepositoryImpl(
         catWithBreedsList: List<CatWithBreeds>
     ) {
         for (item in catWithBreedsList) {
-            db.dao.insertCat(item.cat)
-            for (breed in item.breeds) {
-                db.dao.insertBreed(breed)
-                db.dao.insertCatBreedsCrossRef(item.cat.catId.toCatBreedCrossRef(breed.breedId))
+            if ((item.cat.height > item.cat.width) && item.cat.height < 2500) {
+                db.dao.insertCat(item.cat)
+                for (breed in item.breeds) {
+                    db.dao.insertBreed(breed)
+                    db.dao.insertCatBreedsCrossRef(item.cat.catId.toCatBreedCrossRef(breed.breedId))
+                }
             }
         }
     }

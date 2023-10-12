@@ -7,5 +7,7 @@ import androidx.room.PrimaryKey
 data class CatInfoEntity(
     @PrimaryKey(autoGenerate = false)
     val catId: String,
-    val url: String
+    val url: String,
+    val width: Int,
+    val height: Int
 )
