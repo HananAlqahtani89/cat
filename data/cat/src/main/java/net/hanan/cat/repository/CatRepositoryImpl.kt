@@ -5,10 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import net.hanan.cat.local.CatDatabase
 import net.hanan.cat.local.entity.relations.CatWithBreeds
+import net.hanan.cat.mapper.toCat
 import net.hanan.cat.mapper.toCatBreedCrossRef
 import net.hanan.cat.mapper.toCatInfo
 import net.hanan.cat.mapper.toCatWithBreeds
 import net.hanan.cat.remote.CatsApi
+import net.hanan.core.domain.model.Cat
 import net.hanan.core.domain.model.CatInfo
 import net.hanan.core.domain.repository.CatRepository
 import net.hanan.core.util.Resource
@@ -47,4 +49,7 @@ class CatRepositoryImpl(
             }
         }
     }
+
+    override suspend fun getCat(id: String): Flow<Cat> =
+        db.dao.getBreedsOfCat(catId = id).map { it.toCat() }
 }
