@@ -27,11 +27,14 @@ class CatDetailsViewModel
     }
 
     private fun getCat(id: String) {
+        state = state.copy(loading = true)
         viewModelScope.launch {
             useCase.getCatDetailsUseCase(id)
-                .catch { }
+                .catch {
+                    state = state.copy(loading = false)
+                }
                 .collect {
-                    state = state.copy(cat = it)
+                    state = state.copy(cat = it, loading = false)
                 }
         }
     }
