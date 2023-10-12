@@ -22,6 +22,6 @@ object Compose {
     private const val mapVersion = "2.14.1"
     const val mapCompose = "com.google.maps.android:maps-compose:$mapVersion"
 
-    private const val materialversion = "1.1.2"
+    private const val materialversion = "1.2.0-alpha02"
     const val material = "androidx.compose.material3:material3:$materialversion"
 }
