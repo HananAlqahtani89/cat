@@ -2,8 +2,8 @@ package net.hanan.home.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,12 +23,14 @@ fun CatItem(
         }
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current).data(catInfo.url).build(),
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(catInfo.url)
+                .build(),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillWidth,
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .fillMaxHeight()
         )
     }
 }
