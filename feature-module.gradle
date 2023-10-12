@@ -53,6 +53,7 @@ dependencies {
     implementation Compose.viewModelCompose
     implementation Compose.activityCompose
     implementation DaggerHilt.hiltAndroid
+    implementation Coil.coilCompose
 
     testImplementation Testing.junit4 
     testImplementation Testing.junitAndroidExt 
