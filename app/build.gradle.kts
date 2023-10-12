@@ -51,6 +51,7 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreUi))
     implementation(project(Modules.home))
+    implementation(project(Modules.details))
 
     implementation(Compose.compiler)
     implementation(Compose.ui)
