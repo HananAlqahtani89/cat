@@ -4,4 +4,5 @@ apply {
 
 dependencies {
     "implementation"(project(DataCenter.cat))
+    "implementation"(project(Modules.coreUi))
 }
