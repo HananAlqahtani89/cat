@@ -1,70 +1,72 @@
 package net.hanan.details.presenntation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import net.hanan.core_ui.components.bottomSheet.CatBottomSheet
 import net.hanan.core_ui.components.snackbar.ContentWithMessageBar
 import net.hanan.core_ui.components.snackbar.rememberMessageBarState
-import net.hanan.core_ui.components.text.HeadlineText
-import net.hanan.core_ui.components.text.SubheadText
-import net.hanan.core_ui.components.text.TitleText
 import net.hanan.core_ui.util.OnLifecycleEvent
+import net.hanan.details.presenntation.components.DetailsSheetContent
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatDetailsScreen(
-    viewModel: CatDetailsViewModel = hiltViewModel(),
-    catId: String
+    viewModel: CatDetailsViewModel = hiltViewModel(), catId: String
 ) {
+    val scaffoldState = rememberBottomSheetScaffoldState()
+    val state = rememberMessageBarState()
+
     OnLifecycleEvent { _, event ->
         when (event) {
-            Lifecycle.Event.ON_CREATE ->
-                viewModel.onEvent(CatDetailsEvent.GetCat(catId))
+            Lifecycle.Event.ON_CREATE -> viewModel.onEvent(CatDetailsEvent.GetCat(catId))
 
             else -> {}
         }
     }
 
-    val state = rememberMessageBarState()
-
-    ContentWithMessageBar(messageBarState = state) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            // TODO: Loading
-
+    CatBottomSheet(
+        sheetContent = {
             viewModel.state.cat?.let { cat ->
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(cat.info.url)
-                        .build(),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp)
-                )
-
-                TitleText(text = cat.breeds[0].name)
-
-                Spacer(modifier = Modifier.padding(top = 16.dp))
-
-                HeadlineText(text = "Description")
-                Spacer(modifier = Modifier.padding(top = 8.dp))
-
-                SubheadText(text = cat.breeds[0].description)
+                DetailsSheetContent(cat)
+            }
+        }, sheetState = scaffoldState
+    ) {
+        ContentWithMessageBar(messageBarState = state) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (viewModel.state.loading)
+                    CircularProgressIndicator(color = Color.White)
+                else {
+                    viewModel.state.cat?.let { cat ->
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current).data(cat.info.url)
+                                .build(),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillHeight,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                }
             }
         }
     }
