@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import net.hanan.core_ui.components.snackbar.ContentWithMessageBar
 import net.hanan.core_ui.components.snackbar.rememberMessageBarState
 import net.hanan.core_ui.components.text.HeadlineText
+import net.hanan.core_ui.util.OnLifecycleEvent
 import net.hanan.home.presentation.components.CatItem
 
 @Composable
@@ -31,6 +33,14 @@ fun HomeScreen(
         if (viewModel.state.error) state.error()
     }
 
+    OnLifecycleEvent { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_CREATE -> viewModel.onEvent(HomeEvent.GetCats())
+
+            else -> {}
+        }
+    }
+
     ContentWithMessageBar(messageBarState = state) {
         Column(
             modifier = Modifier
@@ -42,25 +52,27 @@ fun HomeScreen(
             if (viewModel.state.loading)
                 CircularProgressIndicator(color = Color.White)
             else {
-                if (viewModel.state.cat.isEmpty()) {
-                    HeadlineText(
-                        text = "There are no cats..",
-                        color = Color.White
-                    )
-                } else {
-                    LazyVerticalStaggeredGrid(
-                        columns = StaggeredGridCells.Adaptive(200.dp),
-                        verticalItemSpacing = 2.dp,
-                        horizontalArrangement = Arrangement.spacedBy(2.dp),
-                        content = {
-                            items(viewModel.state.cat) {
-                                CatItem(
-                                    catInfo = it,
-                                    onCatClicked = { onCatClicked.invoke(it.id) }
-                                )
+                viewModel.state.cat?.let {cat ->
+                    if (cat.isEmpty()) {
+                        HeadlineText(
+                            text = "There are no cats..",
+                            color = Color.White
+                        )
+                    } else {
+                        LazyVerticalStaggeredGrid(
+                            columns = StaggeredGridCells.Adaptive(200.dp),
+                            verticalItemSpacing = 2.dp,
+                            horizontalArrangement = Arrangement.spacedBy(2.dp),
+                            content = {
+                                items(cat) {
+                                    CatItem(
+                                        catInfo = it,
+                                        onCatClicked = { onCatClicked.invoke(it.id) }
+                                    )
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
