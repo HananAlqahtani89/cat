@@ -7,8 +7,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import net.hanan.cats.ui.theme.CatsTheme
 import net.hanan.core.navigation.Route
+import net.hanan.core_ui.ui.theme.CatsTheme
 import net.hanan.home.presentation.HomeScreen
 
 @AndroidEntryPoint
