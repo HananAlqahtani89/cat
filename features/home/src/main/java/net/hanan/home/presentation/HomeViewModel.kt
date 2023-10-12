@@ -1,6 +1,5 @@
 package net.hanan.home.presentation
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,15 +21,16 @@ class HomeViewModel
     var state by mutableStateOf(HomeState())
         private set
 
-    init {
-        getCats()
+    fun onEvent(event: HomeEvent){
+        when(event) {
+            is HomeEvent.GetCats-> getCats()
+        }
     }
 
     private fun getCats() {
         viewModelScope.launch {
             useCases.getCatsUseCase()
                 .catch {
-                    Log.e("hannan", "getCats: " + it.localizedMessage)
                     state = state.copy(
                         loading = false,
                         error = true
@@ -46,8 +46,6 @@ class HomeViewModel
                         }
 
                         is Resource.Success -> {
-                            Log.e("hannan", "getCats: " + res.data)
-
                             state.copy(
                                 loading = false,
                                 error = false,
@@ -56,8 +54,6 @@ class HomeViewModel
                         }
 
                         is Resource.Error -> {
-                            Log.e("hannan", "getCats: " + res.error)
-
                             state.copy(
                                 loading = false,
                                 error = true
