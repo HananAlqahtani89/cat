@@ -15,7 +15,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Cats"
 include(":app")
+
 include(":core")
+include(":core-ui")
+
 include(":data:cat")
 
 include(":features:home")
