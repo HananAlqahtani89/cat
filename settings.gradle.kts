@@ -22,3 +22,4 @@ include(":core-ui")
 include(":data:cat")
 
 include(":features:home")
+include(":features:details")
