@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="something_wrong_msg">It seems that something went wrong,\nPlease try again later.</string>
+</resources>
