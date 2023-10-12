@@ -7,6 +7,12 @@ android {
     namespace "net.hanan.feature"
     compileSdk ProjectConfig.compileSdk
 
+    packaging {
+        exclude("META-INF/LICENSE-notice.md")
+        exclude("META-INF/LICENSE.md")
+        exclude("META-INF/DEPENDENCIES.md")
+    }
+
     defaultConfig {
         minSdk ProjectConfig.minSdk
         targetSdk ProjectConfig.targetSdk
@@ -62,7 +68,10 @@ dependencies {
     testImplementation Testing.turbine 
     testImplementation Testing.composeUiTest
     testImplementation Testing.mockk
-    testImplementation Testing.mockWebServer 
+    testImplementation Testing.mockWebServer
+    androidTestImplementation Testing.testRunner
+    androidTestImplementation Testing.hiltTesting
+    testImplementation Testing.mockkAndroid
 
     androidTestImplementation Testing.junit4 
     androidTestImplementation Testing.junitAndroidExt 
